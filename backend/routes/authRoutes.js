@@ -1,8 +1,9 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
-const User = require('../Models/user'); 
-
 const router = express.Router();
+const bcrypt = require('bcrypt');
+
+const User = require('../Models/User'); 
+
 
 // Signup route
 router.post('/signup', async (req, res) => {
@@ -11,19 +12,24 @@ router.post('/signup', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    
+    console.log('Hashed password:', hashedPassword);
+
     const newUser = new User({
       userName,
       password: hashedPassword,
     });
 
+    console.log('New user:', newUser);
+
     await newUser.save();
 
     res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred' });
+    console.error('Signup error:', error);
+    res.status(500).json({ error: "An error occurred" });
   }
 });
+
 
 // Login route
 router.post('/login', async (req, res) => {

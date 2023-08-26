@@ -18,4 +18,4 @@ mongoose.models = {}
 
 const User = mongoose.model('Login', userSchema)
 
-export default User
+module.exports = User;
