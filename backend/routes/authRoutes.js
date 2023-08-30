@@ -8,18 +8,19 @@ const User = require('../Models/User');
 // Signup route
 router.post('/signup', async (req, res) => {
   try {
-    const { userName, password } = req.body;
+    const { name,company,email, password } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     console.log('Hashed password:', hashedPassword);
 
     const newUser = new User({
-      userName,
+      name,
+      company,
+      email,
       password: hashedPassword,
     });
 
-    console.log('New user:', newUser);
 
     await newUser.save();
 
@@ -30,6 +31,22 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+router.get('/checkEmail', async(req, res)=>{
+  const { email } = req.query;
+  try {
+    const existingUser = await User.findOne({ email });
+    if(existingUser){
+
+      res.json({ message: 'Email Already Exist' });
+    }else{
+      res.json({ message: 'Valid Email' });
+
+    }
+  } catch (error) {
+    console.error('Error checking email:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+})
 
 // Login route
 router.post('/login', async (req, res) => {
