@@ -23,7 +23,7 @@
     @apply flex items-center justify-between;
 }
 .companyLogo{
-    @apply flex items-center justify-between;
+    @apply flex items-center justify-between mix-blend-multiply;
 }
 .section1{
     @apply flex min-h-full flex-col justify-center px-6 py-6 lg:px-8;

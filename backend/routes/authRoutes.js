@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 
 const User = require('../Models/User'); 
 
+const jwt = require('jsonwebtoken');
+
+
 
 // Signup route
 router.post('/signup', async (req, res) => {
@@ -51,9 +54,9 @@ router.get('/checkEmail', async(req, res)=>{
 // Login route
 router.post('/login', async (req, res) => {
   try {
-    const { userName, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.findOne({ userName });
+    const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(401).json({ error: 'User not found' });
@@ -65,9 +68,10 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ id: user._id, username: user.userName}, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user._id, email: user.email, name:user.name, company: user.company}, process.env.JWT_SECRET);
     return res.status(200).json({ token });
   } catch (error) {
+    console.error('Error during login:', error);
     res.status(500).json({ error: 'An error occurred' });
   }
 });
