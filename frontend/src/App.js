@@ -2,18 +2,22 @@ import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './pages/Authentication/Login'
 import Signup from './pages/Authentication/Signup'
-
+import Landing from './pages/Navigators/Landing';
+import AppLayout from './AppLayout';
 
 function App() {
   return (
   <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Login />}></Route>
-      </Routes>
+        <Route path='/' element={<AppLayout/>}>
+          <Route index element={<Landing />}></Route>
+        </Route>
 
-      <Routes>
+        <Route path='/Login' element={<Login />}></Route>
         <Route path='/Signup' element={<Signup />}></Route>
       </Routes>
+      
+        
       
   </BrowserRouter>  
   );

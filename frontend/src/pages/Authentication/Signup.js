@@ -131,7 +131,7 @@ async function handleSubmit(event) {
 
         <p className="mt-10 text-center text-sm text-gray-500">
           Already a Member?
-          <Link to={'/'} className="SignFont">Sign in</Link>
+          <Link to={'/Login'} className="SignFont">Sign in</Link>
         </p>
       </div>
     </div>

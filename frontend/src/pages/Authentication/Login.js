@@ -1,18 +1,26 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate  } from 'react-router-dom';
 
 import { loginUser } from './Validators/BackendInterface';
 const Login = () => {
-  
+  const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
 
+    const [password, setPassword] = useState('');
+
+
+    useEffect(() => {
+      // Check if the user is already authenticated
+      const token = localStorage.getItem('token');
+
+      if (token) {
+
+        navigate('/Home'); 
+      }
+    }, [navigate]);
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-
-  
+    e.preventDefault();  
       try {
         const userData = {
           email,
@@ -26,9 +34,15 @@ const Login = () => {
 
       localStorage.setItem('token', token);
 
+      setEmail('')
+      setPassword('')
+
+      navigate('/');
+
+
+
     } catch (error) {
       console.error('Error during login:', error);
-      setError('Invalid credentials');
     }
   };
 
@@ -58,8 +72,6 @@ const Login = () => {
         </div>
       </div>
 
-      {error && <div className="text-red-500">{error}</div>}
-
       <div>
         <button type="submit" className="authBtn">Sign in</button>
       </div>
@@ -67,7 +79,7 @@ const Login = () => {
 
     <p className="mt-10 text-center text-sm text-gray-500">
       Not a Member?
-      <Link to={'./Signup'} className="SignFont">Sign Up</Link>
+      <Link to={'/Signup'} className="SignFont">Sign Up</Link>
     </p>
   </div>
 </div>
