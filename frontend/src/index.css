@@ -31,3 +31,6 @@
 .formDiv{
     @apply mt-10 sm:mx-auto sm:w-full sm:max-w-sm;
 }
+.flexCenter{
+    @apply flex justify-center items-center
+}
